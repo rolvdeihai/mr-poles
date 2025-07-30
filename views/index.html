@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MrPoles Body Repair - Home</title>
+    <link rel="stylesheet" href="../styles/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-brand">
+            <div class="logo">
+                <img src="../images/mrpoles.jpg" alt="MrPoles Logo" class="logo-img">
+            </div>
+            <div class="brand-info">
+                <span class="brand-name">MrPoles Body Repair</span>
+                <span class="brand-tagline">Professional Auto Body Solutions</span>
+            </div>
+        </div>
+        <ul class="nav-menu">
+            <li><a href="index.html" class="active">Home</a></li>
+            <li><a href="prices.html">Price List</a></li>
+            <!-- <li><a href="estimate.html">Estimate</a></li>
+            <li><a href="invoice.html">Invoice</a></li> -->
+            <li><a href="history.html">History</a></li>
+        </ul>
+    </nav>
+
+    <div id="home" class="page active">
+        <!-- Keep original home page content -->
+        <div class="container">
+            <div class="page-header">
+                <h1>Select Vehicle Panels</h1>
+                <p>Choose the panels that need repair to get an accurate estimate</p>
+            </div>
+            <div class="car-diagram">
+            <div class="car-layout">
+                <!-- Row 1: Front Bumper -->
+                <div class="panel-btn bumper-btn" data-panel="front-bumper" onclick="selectPanel('front-bumper')">
+                    <div class="panel-icon">🚗</div>
+                    <span>FRONT BUMPER</span>
+                </div>
+                
+                <!-- Main Grid -->
+                <div class="main-grid">
+                    <!-- Column 1: Left Trisplang -->
+                    <div class="panel-btn trisplang-btn" data-panel="l-trisplang" onclick="selectPanel('l-trisplang')">
+                        <div class="panel-icon">📏</div>
+                        <span>(L) TRISPLANG</span>
+                    </div>
+                    
+                    <!-- Column 2: Left side panels -->
+                    <div class="left-panels">
+                        <div class="panel-btn" data-panel="lf-fender" onclick="selectPanel('lf-fender')">
+                            <div class="panel-icon">🔧</div>
+                            <span>LF FENDER</span>
+                        </div>
+                        <div class="panel-btn" data-panel="lf-door" onclick="selectPanel('lf-door')">
+                            <div class="panel-icon">🚪</div>
+                            <span>LF DOOR</span>
+                        </div>
+                        <div class="panel-btn" data-panel="lr-door" onclick="selectPanel('lr-door')">
+                            <div class="panel-icon">🚪</div>
+                            <span>LR DOOR</span>
+                        </div>
+                        <div class="panel-btn" data-panel="lr-fender" onclick="selectPanel('lr-fender')">
+                            <div class="panel-icon">🔧</div>
+                            <span>LR FENDER</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Column 3: Left Panel Roof -->
+                    <div class="panel-btn panel-roof-btn" data-panel="l-panel-roof" onclick="selectPanel('l-panel-roof')">
+                        <div class="panel-icon">📐</div>
+                        <span>(L) PANEL ROOF</span>
+                    </div>
+                    
+                    <!-- Column 4: Center panels -->
+                    <div class="center-panels">
+                        <div class="panel-btn" data-panel="bonnet" onclick="selectPanel('bonnet')">
+                            <div class="panel-icon">🚗</div>
+                            <span>BONNET</span>
+                        </div>
+                        <div class="panel-btn" data-panel="roof" onclick="selectPanel('roof')">
+                            <div class="panel-icon">⬜</div>
+                            <span>ROOF</span>
+                        </div>
+                        <div class="panel-btn" data-panel="back-door" onclick="selectPanel('back-door')">
+                            <div class="panel-icon">🚪</div>
+                            <span>BACK DOOR</span>
+                        </div>
+                        <div class="empty-space"></div>
+                    </div>
+                    
+                    <!-- Column 5: Right Panel Roof -->
+                    <div class="panel-btn panel-roof-btn" data-panel="r-panel-roof" onclick="selectPanel('r-panel-roof')">
+                        <div class="panel-icon">📐</div>
+                        <span>(R) PANEL ROOF</span>
+                    </div>
+                    
+                    <!-- Column 6: Right side panels -->
+                    <div class="right-panels">
+                        <div class="panel-btn" data-panel="rf-fender" onclick="selectPanel('rf-fender')">
+                            <div class="panel-icon">🔧</div>
+                            <span>RF FENDER</span>
+                        </div>
+                        <div class="panel-btn" data-panel="rf-door" onclick="selectPanel('rf-door')">
+                            <div class="panel-icon">🚪</div>
+                            <span>RF DOOR</span>
+                        </div>
+                        <div class="panel-btn" data-panel="rr-door" onclick="selectPanel('rr-door')">
+                            <div class="panel-icon">🚪</div>
+                            <span>RR DOOR</span>
+                        </div>
+                        <div class="panel-btn" data-panel="rr-fender" onclick="selectPanel('rr-fender')">
+                            <div class="panel-icon">🔧</div>
+                            <span>RR FENDER</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Column 7: Right Trisplang -->
+                    <div class="panel-btn trisplang-btn" data-panel="r-trisplang" onclick="selectPanel('r-trisplang')">
+                        <div class="panel-icon">📏</div>
+                        <span>(R) TRISPLANG</span>
+                    </div>
+                </div>
+                
+                <!-- Row 6: Rear Bumper -->
+                <div class="panel-btn bumper-btn" data-panel="rear-bumper" onclick="selectPanel('rear-bumper')">
+                    <div class="panel-icon">🚗</div>
+                    <span>REAR BUMPER</span>
+                </div>
+            </div>
+            </div>
+
+            <div class="selected-panels">
+                <h3>Selected Panels:</h3>
+                <div id="selectedPanelsList"></div>
+                <div id="actionButtons" style="display:none;">
+                    <button class="btn-primary" onclick="createEstimate()">Create Estimate</button>
+                    <button class="btn-primary" onclick="createInvoice()" style="margin-left: 10px;">Create Invoice</button>
+                    <button class="btn-secondary" onclick="resetSelectedPanels()" style="margin-left: 10px;">Reset</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="../scripts/api.js"></script>
+    <script type="module" src="../scripts/index.js"></script>
+</body>
+</html>
