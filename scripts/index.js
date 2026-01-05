@@ -27,11 +27,11 @@ async function checkAuthentication() {
         const auth = await api.checkAuth();
         if (!auth.success) {
             // Redirect to login page
-            window.location.href = 'auth/login.html';
+            window.location.href = '../auth/login.html';
         }
     } catch (error) {
         // Redirect to login page if check fails
-        window.location.href = 'auth/login.html';
+        window.location.href = '../auth/login.html';
     }
 }
 
