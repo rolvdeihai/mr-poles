@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - MrPoles Body Repair</title>
+    <link rel="stylesheet" href="../styles/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+</head>
+<body class="login-body">
+    <div class="login-container">
+        <div class="login-logo">
+            <img src="../images/mrpoles.jpg" alt="MrPoles Logo">
+        </div>
+        
+        <div class="login-title">
+            <h1>MrPoles Body Repair</h1>
+            <p>Professional Auto Body Solutions</p>
+            <p style="margin-top: 0.5rem; color: var(--text-secondary); font-size: 0.9rem;">
+                Enter your credentials to continue
+            </p>
+        </div>
+        
+        <form id="loginForm" class="login-form">
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" id="username" placeholder="Enter your username" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" placeholder="Enter your password" required>
+            </div>
+            
+            <button type="submit" class="btn-login" id="loginBtn">
+                <span id="loginText">Login</span>
+                <span id="loginLoading" style="display: none;">Logging in...</span>
+            </button>
+            
+            <div class="login-error" id="loginError">
+                <span id="errorMessage"></span>
+            </div>
+        </form>
+        
+        <div class="demo-info">
+            <h4>📝 Demo Credentials</h4>
+            <p><strong>Username:</strong> admin</p>
+            <p><strong>Password:</strong> password123</p>
+            <p style="font-size: 0.8rem; margin-top: 0.5rem; color: rgba(230, 230, 230, 0.7);">
+                Note: Create users in Supabase 'users' table first
+            </p>
+        </div>
+    </div>
+
+    <script type="module">
+        import { login } from '../scripts/api.js';
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            const loginForm = document.getElementById('loginForm');
+            const usernameInput = document.getElementById('username');
+            const passwordInput = document.getElementById('password');
+            const loginBtn = document.getElementById('loginBtn');
+            const loginText = document.getElementById('loginText');
+            const loginLoading = document.getElementById('loginLoading');
+            const loginError = document.getElementById('loginError');
+            const errorMessage = document.getElementById('errorMessage');
+            
+            // Check if already logged in
+            const existingAuth = localStorage.getItem('mrpoles_auth');
+            if (existingAuth) {
+                try {
+                    const user = JSON.parse(existingAuth);
+                    if (user.loggedIn) {
+                        // Redirect to main page
+                        window.location.href = '../index.html';
+                    }
+                } catch (e) {
+                    // Invalid session, continue with login
+                }
+            }
+            
+            loginForm.addEventListener('submit', async function(e) {
+                e.preventDefault();
+                
+                const username = usernameInput.value.trim();
+                const password = passwordInput.value;
+                
+                if (!username || !password) {
+                    showError('Please enter both username and password');
+                    return;
+                }
+                
+                // Show loading state
+                loginBtn.disabled = true;
+                loginText.style.display = 'none';
+                loginLoading.style.display = 'inline';
+                hideError();
+                
+                try {
+                    const result = await login(username, password);
+                    
+                    if (result.success) {
+                        // Login successful
+                        loginLoading.textContent = 'Success! Redirecting...';
+                        
+                        // Small delay to show success message
+                        setTimeout(() => {
+                            window.location.href = '../views/index.html';
+                        }, 1000);
+                    } else {
+                        // Login failed
+                        showError(result.error || 'Invalid username or password');
+                        resetLoginButton();
+                    }
+                } catch (error) {
+                    showError('Network error. Please check your connection and try again.');
+                    resetLoginButton();
+                }
+            });
+            
+            function showError(message) {
+                errorMessage.textContent = message;
+                loginError.classList.add('show');
+            }
+            
+            function hideError() {
+                loginError.classList.remove('show');
+            }
+            
+            function resetLoginButton() {
+                loginBtn.disabled = false;
+                loginText.style.display = 'inline';
+                loginLoading.style.display = 'none';
+                loginLoading.textContent = 'Logging in...';
+            }
+            
+            // Auto-focus username field
+            usernameInput.focus();
+            
+            // Handle Enter key navigation
+            usernameInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    passwordInput.focus();
+                }
+            });
+            
+            passwordInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    loginForm.dispatchEvent(new Event('submit'));
+                }
+            });
+            
+            // Clear error when user starts typing
+            usernameInput.addEventListener('input', hideError);
+            passwordInput.addEventListener('input', hideError);
+        });
+    </script>
+</body>
+</html>
